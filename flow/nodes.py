@@ -1,62 +1,98 @@
 # flow/nodes.py
-# Definición de los nodos (runnables) que forman parte del grafo.
-# Cada nodo es una función que recibe el `state` actual y retorna un diccionario
-# con los campos que actualizan el estado. Luego se envuelven en `RunnableLambda`
-# para ser usados por LangGraph.
-# Imports:
-# - `RunnableLambda` desde `langchain_core.runnables` (parte de LangChain Core).
-# - `gemini_llm` desde `services.gemini` (wrapper local que normaliza llamadas al LLM).
+# Este archivo es el cerebro de nuestro chatbot. Aquí definimos las diferentes
+# "estaciones" por las que pasa cada mensaje antes de dar una respuesta.
 
-from typing import Any
 from langchain_core.runnables import RunnableLambda
-from services.gemini import gemini_llm
+from services.gemini import asistente_gemini
+from utils.langfuse_logger import logger
+
+def obtener_texto_del_estado(estado) -> str:
+    """
+    Esta función es como un ayudante que busca el mensaje en diferentes lugares.
+    Es como buscar un papel que puede estar en diferentes cajones.
+    """
+    # Si es un objeto Pydantic
+    if hasattr(estado, "texto"):
+        return estado.texto
+    # Si es un diccionario
+    elif isinstance(estado, dict):
+        return estado.get("texto", "")
+    # Si es otro tipo de objeto
+    return str(estado)
 
 
-def _get_text_from_state(state: Any) -> str:
-    """Extrae el campo 'text' desde el estado, sea dict o BaseModel."""
-    if hasattr(state, "dict"):
-        data = state.dict()
-    else:
-        data = dict(state)
-    return data.get("text", "")
+def nodo_entrada(estado):
+    """
+    Primera estación: Recibe el mensaje del usuario
+    Es como una recepcionista que toma tu mensaje y lo prepara para procesarlo
+    """
+    texto = obtener_texto_del_estado(estado)
+    from flow.graph import EstadoApp
+    return EstadoApp(texto=texto)
 
 
-def input_node(state):
-    """Nodo de entrada: toma el texto del usuario y lo pasa al siguiente nodo."""
-    return {"text": _get_text_from_state(state)}
-
-
-def text_loader_node(state):
-    """Nodo que simula la carga de contenido sobre el texto dado."""
-    topic = _get_text_from_state(state)
-    return {"text": f"Contenido simulado sobre {topic}"}
-
-
-def answer_node(state):
-    """Nodo que invoca el LLM para resumir el contenido."""
-    prompt = f"Resume el siguiente contenido: {_get_text_from_state(state)}"
-    # Intenta invocar el LLM usando diferentes APIs
+def nodo_procesador(estado):
+    """
+    Segunda estación: Procesa el mensaje y genera la respuesta
+    Aquí es donde la magia ocurre: nuestro asistente Gemini lee tu mensaje
+    y genera una respuesta inteligente.
+    """
     try:
-        response = gemini_llm.invoke(prompt)
-        content = getattr(response, "content", str(response))
-    except Exception:
-        try:
-            result = gemini_llm.generate([{"role": "user", "content": prompt}])
-            content = getattr(result, "generations", None)
-            if content:
-                content = content[0][0].text if isinstance(content[0], list) and hasattr(content[0][0], "text") else str(content)
-            else:
-                content = str(result)
-        except Exception:
-            try:
-                content = gemini_llm(prompt)
-            except RuntimeError as e:
-                content = f"Error invoking LLM: {e}"
-            except Exception as e:
-                content = f"Error invoking LLM: {e}"
-    return {"output": content}
+        # Extraer el texto del mensaje
+        texto = obtener_texto_del_estado(estado)
+        
+        # Si no hay texto, devolver un mensaje de error
+        if not texto:
+            return {"error": "No se proporcionó texto para procesar"}
+        
+        # Obtener respuesta del modelo
+        respuesta = asistente_gemini.preguntar(texto)
+        
+        # Registrar la interacción
+        logger.log("procesar_mensaje", {
+            "entrada": texto,
+            "salida": respuesta
+        })
+        
+        # Devolver un objeto EstadoApp actualizado
+        from flow.graph import EstadoApp
+        return EstadoApp(texto=texto, salida=respuesta.content)
+        
+    except Exception as e:
+        # Si hay un error, devolver un mensaje de error
+        return {
+            "error": f"Error al procesar el mensaje: {str(e)}"
+        }
 
-# Envuelve cada función como Runnable para el grafo
-input_node_runnable = RunnableLambda(input_node)
-text_loader_runnable = RunnableLambda(text_loader_node)
-answer_node_runnable = RunnableLambda(answer_node)
+
+def nodo_respuesta(estado):
+    """
+    Tercera estación: Formatea y devuelve la respuesta final
+    """
+    # Si el estado es un diccionario con error
+    if isinstance(estado, dict) and "error" in estado:
+        return {"error": estado["error"]}
+    
+    # Si el estado es un objeto Pydantic
+    if hasattr(estado, "texto") and hasattr(estado, "salida"):
+        texto = estado.texto
+        salida = estado.salida
+    # Si el estado es un diccionario
+    elif isinstance(estado, dict):
+        texto = estado.get("texto", "")
+        salida = estado.get("salida", "")
+    # Caso por defecto
+    else:
+        texto = str(estado)
+        salida = ""
+    
+    return {
+        "texto": texto,
+        "salida": salida
+    }
+
+
+# Convertimos nuestras funciones en "estaciones" del chatbot
+nodo_entrada_runnable = RunnableLambda(nodo_entrada)
+nodo_procesador_runnable = RunnableLambda(nodo_procesador)
+nodo_respuesta_runnable = RunnableLambda(nodo_respuesta)

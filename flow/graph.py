@@ -1,59 +1,63 @@
 """
-Define y compila el grafo de estado usado por la aplicación.
+flow/graph.py
 
-Este módulo construye un `StateGraph` (de LangGraph) con un `state_schema` que
-describe la forma del estado que se pasa entre nodos. También registra los
-nodos (`InputNode`, `TextLoaderNode`, `AnswerNode`) y sus conexiones.
+¡Bienvenido al mapa de nuestro chatbot! 🗺️
 
-Imports:
-- `BaseModel` de `pydantic` para definir el esquema del estado.
-- `StateGraph` desde `langgraph.graph` (paquete externo `langgraph`).
-- Los `Runnable` de los nodos vienen desde `flow.nodes` (módulo local).
+Este archivo es como el plano que muestra cómo viaja cada mensaje desde que lo escribes
+hasta que recibes una respuesta. Imagina que es como una línea de metro donde cada
+estación (nodo) tiene una tarea específica.
+
+¿Qué necesitamos para construir este mapa?
+1. BaseModel: Es como un formulario que nos dice qué información guardamos
+2. StateGraph: Es nuestro constructor de mapas, viene de la biblioteca LangGraph
+3. Los nodos: Son las "estaciones" por donde pasa cada mensaje
 """
 
 from typing import Optional
 from pydantic import BaseModel
-
-# `StateGraph` es la clase principal que representa un grafo de estado en LangGraph.
-# Se importa desde el paquete `langgraph` instalado en el entorno.
 from langgraph.graph import StateGraph
+from flow.nodes import (
+    nodo_entrada_runnable,
+    nodo_procesador_runnable,
+    nodo_respuesta_runnable
+)
 
-# Los nodos del grafo (instancias Runnable) se definen en el módulo local
-# `flow.nodes`.
-from flow.nodes import input_node_runnable, text_loader_runnable, answer_node_runnable
+
+class EstadoApp(BaseModel):
+    """
+    Este es como el sobre que lleva la información entre estaciones.
+    
+    Tiene dos bolsillos:
+    - texto: donde guardamos lo que escribe el usuario
+    - salida: donde ponemos la respuesta del chatbot (puede estar vacío al inicio)
+    """
+    texto: str
+    salida: Optional[str] = None
 
 
-class AppState(BaseModel):
-    """Modelo Pydantic que describe el estado que viaja entre los nodos.
-
-    Campos:
-    - text: texto de entrada o pregunta del usuario.
-    - output: resultado generado por el LLM o por el flujo (opcional).
+def construir_grafo():
+    """
+    Esta función es como armar el mapa del metro: conecta todas las estaciones
+    en el orden correcto para que el mensaje sepa por dónde tiene que pasar.
+    
+    Es como decir:
+    1. Empiezas en la estación de entrada
+    2. Luego vas a la estación de procesamiento
+    3. Terminas en la estación de respuesta
     """
 
-    text: str
-    output: Optional[str] = None
+    # Creamos un nuevo mapa usando nuestro sobre especial (EstadoApp)
+    grafo = StateGraph(state_schema=EstadoApp)
 
+    # Registramos cada estación en el mapa
+    grafo.add_node("EstacionEntrada", nodo_entrada_runnable)
+    grafo.add_node("EstacionProcesamiento", nodo_procesador_runnable)
+    grafo.add_node("EstacionRespuesta", nodo_respuesta_runnable)
 
-def build_graph():
-    """Construye y compila un StateGraph usando `AppState` como esquema.
+    # Dibujamos las líneas que conectan las estaciones
+    grafo.set_entry_point("EstacionEntrada")  # Aquí empieza el viaje
+    grafo.add_edge("EstacionEntrada", "EstacionProcesamiento")  # Primera conexión
+    grafo.add_edge("EstacionProcesamiento", "EstacionRespuesta")  # Segunda conexión
 
-    Retorna:
-        graph.compile() -> grafo compilado listo para invocar mediante `invoke`.
-    """
-
-    # Instanciar el grafo con el esquema de estado Pydantic
-    graph = StateGraph(state_schema=AppState)
-
-    # Registrar nodos: cada uno es un Runnable creado en `flow.nodes`.
-    graph.add_node("InputNode", input_node_runnable)
-    graph.add_node("TextLoaderNode", text_loader_runnable)
-    graph.add_node("AnswerNode", answer_node_runnable)
-
-    # Definir el punto de entrada y las aristas (flujo)
-    graph.set_entry_point("InputNode")
-    graph.add_edge("InputNode", "TextLoaderNode")
-    graph.add_edge("TextLoaderNode", "AnswerNode")
-
-    # Compilar y devolver el grafo listo para ejecutar
-    return graph.compile()
+    # El mapa está listo para usarse
+    return grafo.compile()
