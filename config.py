@@ -1,3 +1,4 @@
+#este es el archivo de configuración con las claves para las variables de entorno
 import os
 from dotenv import load_dotenv
 

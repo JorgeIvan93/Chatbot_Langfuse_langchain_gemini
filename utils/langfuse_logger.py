@@ -1,7 +1,7 @@
 from langfuse import Langfuse
 from config import LANGFUSE_PUBLIC_KEY, LANGFUSE_SECRET_KEY, LANGFUSE_HOST
 
-
+# Clase para manejar el logging en Langfuse
 class LangfuseLogger:
     def __init__(self):
         try:
@@ -13,10 +13,7 @@ class LangfuseLogger:
         except Exception:
             self.client = None
     
-    def log(self, event_name: str, data: dict):
-        """
-        Registra un evento en Langfuse si está disponible
-        """
+    def log(self, event_name: str, data: dict):  # Registra un evento en Langfuse si está disponible
         if self.client:
             try:
                 # Crear una nueva observación

@@ -1,19 +1,12 @@
-# flow/nodes.py
-# Este archivo es el cerebro de nuestro chatbot. Aquí definimos las diferentes
-# "estaciones" por las que pasa cada mensaje antes de dar una respuesta.
+from langchain_core.runnables import RunnableLambda #crea nodos ejecutables
+from services.gemini import asistente_gemini #nuestro asistente Gemini
+from utils.langfuse_logger import logger #registro de eventos en Langfuse
 
-from langchain_core.runnables import RunnableLambda
-from services.gemini import asistente_gemini
-from utils.langfuse_logger import logger
-
-def obtener_texto_del_estado(estado) -> str:
-    """
-    Esta función es como un ayudante que busca el mensaje en diferentes lugares.
-    Es como buscar un papel que puede estar en diferentes cajones.
-    """
+def obtener_texto_del_estado(estado) -> str:   #busca el texto en el estado proporcionado en graph
+    #verificamos que tipo de estado es para extraer el texto y evitar errores de tipos de escritura
     # Si es un objeto Pydantic
     if hasattr(estado, "texto"):
-        return estado.texto
+        return estado.texto 
     # Si es un diccionario
     elif isinstance(estado, dict):
         return estado.get("texto", "")
@@ -22,66 +15,56 @@ def obtener_texto_del_estado(estado) -> str:
 
 
 def nodo_entrada(estado):
-    """
-    Primera estación: Recibe el mensaje del usuario
-    Es como una recepcionista que toma tu mensaje y lo prepara para procesarlo
-    """
+    #Recibe el mensaje del usuario y lo prepara para procesarlo
     texto = obtener_texto_del_estado(estado)
-    from flow.graph import EstadoApp
+    from flow.graph import EstadoApp #importamos el esquema de estado
     return EstadoApp(texto=texto)
 
 
 def nodo_procesador(estado):
-    """
-    Segunda estación: Procesa el mensaje y genera la respuesta
-    Aquí es donde la magia ocurre: nuestro asistente Gemini lee tu mensaje
-    y genera una respuesta inteligente.
-    """
+    #Procesa el mensaje y genera la respuesta, nuestro asistente Gemini lee el mensaje y genera una respuesta
     try:
         # Extraer el texto del mensaje
         texto = obtener_texto_del_estado(estado)
         
-        # Si no hay texto, devolver un mensaje de error
+        # Si no hay texto, devuelve un mensaje de error
         if not texto:
-            return {"error": "No se proporcionó texto para procesar"}
+            return {"error": "porfavor, ingresa un mensaje para responderlo"}
         
-        # Obtener respuesta del modelo
+        # obtiene respuesta del modelo de gemini
         respuesta = asistente_gemini.preguntar(texto)
         
-        # Registrar la interacción
+        # registra la interacción
         logger.log("procesar_mensaje", {
             "entrada": texto,
             "salida": respuesta
         })
         
-        # Devolver un objeto EstadoApp actualizado
+        # Devuelve el EstadoApp actualizado
         from flow.graph import EstadoApp
         return EstadoApp(texto=texto, salida=respuesta.content)
         
     except Exception as e:
-        # Si hay un error, devolver un mensaje de error
+        # Si hay un error, devolvuelve un mensaje de error
         return {
             "error": f"Error al procesar el mensaje: {str(e)}"
         }
 
 
-def nodo_respuesta(estado):
-    """
-    Tercera estación: Formatea y devuelve la respuesta final
-    """
+def nodo_respuesta(estado):    #Formatea y devuelve la respuesta final
     # Si el estado es un diccionario con error
     if isinstance(estado, dict) and "error" in estado:
         return {"error": estado["error"]}
     
-    # Si el estado es un objeto Pydantic
+    # Si el estado es un objeto Pydantic entrega los valores correspondientes
     if hasattr(estado, "texto") and hasattr(estado, "salida"):
         texto = estado.texto
         salida = estado.salida
-    # Si el estado es un diccionario
+    # Si el estado es un diccionario devuelve los valores correspondientes
     elif isinstance(estado, dict):
         texto = estado.get("texto", "")
         salida = estado.get("salida", "")
-    # Caso por defecto
+    # Caso por defecto devuelve el estado como texto y una salida vacía
     else:
         texto = str(estado)
         salida = ""
@@ -92,7 +75,7 @@ def nodo_respuesta(estado):
     }
 
 
-# Convertimos nuestras funciones en "estaciones" del chatbot
+# Convertimos las funciones del chatbot en nodos ejecutables 
 nodo_entrada_runnable = RunnableLambda(nodo_entrada)
 nodo_procesador_runnable = RunnableLambda(nodo_procesador)
 nodo_respuesta_runnable = RunnableLambda(nodo_respuesta)

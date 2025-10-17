@@ -1,6 +1,6 @@
 @echo off
 REM =================================================================
-REM 🚀 Script de inicio del Chatbot Inteligente
+REM Script de inicio del Chatbot Inteligente
 REM
 REM Este script configura el entorno y ejecuta el chatbot de forma
 REM silenciosa, ocultando mensajes técnicos para una mejor experiencia.
