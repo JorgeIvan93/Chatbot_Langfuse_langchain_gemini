@@ -5,7 +5,6 @@ from pydantic import BaseModel   # indica informacion que guardamos
 from langgraph.graph import StateGraph # modelo que maneja el flujo
 from flow.nodes import (nodo_entrada_runnable, nodo_procesador_runnable, nodo_respuesta_runnable)
 
-
 class EstadoApp(BaseModel):
     texto: str  #guarda lo que escribe el usuario
     salida: Optional[str] = None #respuesta del chatbot (puede estar vacío al inicio)

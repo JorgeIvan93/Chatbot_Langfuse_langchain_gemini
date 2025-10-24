@@ -8,6 +8,7 @@ class ConfiguracionApp(BaseSettings):
     url_langfuse: str = Field(..., alias="LANGFUSE_HOST")
     modelo_gemini: str = Field(..., alias="GEMINI_MODEL")
 
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

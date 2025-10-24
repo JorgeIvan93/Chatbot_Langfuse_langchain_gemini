@@ -16,7 +16,6 @@ class LangfuseLogger:
     def log(self, nombre_evento: str, datos: dict):  # Registra un evento en Langfuse si está disponible
         if self.client:
             try:
-                # Crear una nueva observación
                 observacion = self.client.trace(
                     name=nombre_evento
                 ).generation(
