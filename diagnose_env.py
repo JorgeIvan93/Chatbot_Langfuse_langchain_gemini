@@ -1,37 +1,39 @@
-#archivo para diagnosticar problemas de importación de langchain_google_genai 
-import sys # importar sys para acceder a información del sistema
-import importlib # importar importlib para importar módulos dinámicamente 
+# archivo para diagnosticar problemas de importación de langchain_google_genai 
+import sys  # importar sys para acceder a información del sistema
+import importlib  # importar importlib para importar módulos dinámicamente 
 
 # Función para imprimir encabezados
-def print_header(title):
-    print('\n' + '='*10 + ' ' + title + ' ' + '='*10) 
+def imprimir_encabezado(titulo):
+    print('' + '='*10 + ' ' + titulo + ' ' + '='*10)
 
 # Imprimir información del entorno
-print_header('Python executable')
+imprimir_encabezado('Ejecutable de Python')
 print(sys.executable)
 
 # imprimir sys.path para ver rutas de búsqueda de módulos
-print_header('sys.path')
-for p in sys.path:
-    print(p)
+imprimir_encabezado('sys.path')
+for ruta in sys.path:
+    print(ruta)
 
 # imprimir prefijo de instalación de Python para ver dónde está instalado
-print_header('where python (from sys)')
+imprimir_encabezado('Ubicación de instalación de Python')
 print(sys.prefix)
 
 # Intentar importar langchain_google_genai para ver si está disponible
-print_header('trying import langchain_google_genai')
+imprimir_encabezado('Intentando importar langchain_google_genai')
 try:
-    mod = importlib.import_module('langchain_google_genai')
-    print('OK import: ', mod.__file__)
-except Exception as e:
-    print('IMPORT ERROR:', type(e), e)
+    modulo = importlib.import_module('langchain_google_genai')
+    print('Importación exitosa: ', modulo.__file__)
+except Exception as error:
+    print('ERROR DE IMPORTACIÓN:', type(error), error)
+
 # Intentar importar ChatGoogleGenerativeAI desde langchain_google_genai
-print_header('trying import langchain_google_genai.ChatGoogleGenerativeAI')
+imprimir_encabezado('Intentando importar ChatGoogleGenerativeAI')
 try:
     from langchain_google_genai import ChatGoogleGenerativeAI
-    print('OK class found')
-except Exception as e:
-    print('IMPORT ERROR:', type(e), e)
+    print('Clase encontrada exitosamente')
+except Exception as error:
+    print('ERROR DE IMPORTACIÓN:', type(error), error)
+
 # Finalizar diagnóstico
-print_header('done')
+imprimir_encabezado('Diagnóstico finalizado')

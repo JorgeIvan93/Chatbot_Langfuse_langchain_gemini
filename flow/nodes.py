@@ -1,5 +1,5 @@
 from langchain_core.runnables import RunnableLambda #crea nodos ejecutables
-from services.gemini import asistente_gemini #nuestro asistente Gemini
+from services.gemini import AsistenteGemini
 from utils.langfuse_logger import logger #registro de eventos en Langfuse
 
 def obtener_texto_del_estado(estado) -> str:   #busca el texto en el estado proporcionado en graph
