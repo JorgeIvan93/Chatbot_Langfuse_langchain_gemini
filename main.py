@@ -50,7 +50,7 @@ def iniciar_chat():  # inicia el chat con el usuario y lo mantiene activo hasta 
             resultado = sistema.invoke(entrada)
 
             # Mostramos la respuesta de manera amigable
-            print("Tu Respuesta es:")
+            print("\nTu Respuesta es:")
             print("______________________________________________")
             print(resultado.get("salida", "Lo siento, no pude procesar tu pregunta."))
             print("______________________________________________")
