@@ -16,7 +16,6 @@ from config import settings
 
 
 class GeminiClient:
-
     def __init__(self) -> None:
         # Read model configuration from centralized settings
         model = settings.gemini_model
@@ -33,7 +32,9 @@ class GeminiClient:
             raise ValueError(msg)
 
         # Inform about model initialization (safe: does not print secrets)
-        logger.info(f"Initializing Gemini client with model: {model}, temperature={temperature}")
+        logger.info(
+            f"Initializing Gemini client with model: {model}, temperature={temperature}"
+        )
 
         # Instantiate the LangChain chat model with explicit API key
         # (avoids falling back to ADC/environment auto-discovery)

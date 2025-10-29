@@ -18,7 +18,7 @@ Aplicación de consola basada en **LangGraph** que usa **Google Gemini** (vía L
 ## 🧱 Requisitos
 
 - **Python 3.13** (recomendado para usar Langfuse hoy).
-  - *Nota:* Con Python 3.14, el SDK de Langfuse puede fallar al importar debido a rutas internas que dependen de Pydantic v1. En 3.14 el tracing está deshabilitado por defecto en el código.  
+  - *Nota:* Con Python 3.14, el SDK de Langfuse puede fallar al importar debido a rutas internas que dependen de Pydantic v1. En 3.14 el tracing está deshabilitado por defecto en el código.
 - Clave de **Google AI Studio** (Gemini Developer API) — *no* Vertex AI.
 - (Opcional) Proyecto y llaves de **Langfuse Cloud** (EU/US).
 

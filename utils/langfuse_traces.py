@@ -65,8 +65,8 @@ def setup_langfuse_tracer():
             public_key=pk,
             secret_key=sk,
             base_url=_get_base_url(),
-            flush_at=10,       # batch size before automatic flush
-            flush_interval=60, # periodic flush interval (seconds)
+            flush_at=10,  # batch size before automatic flush
+            flush_interval=60,  # periodic flush interval (seconds)
         )
 
         # Optional connectivity check (logs the result; does not raise)
@@ -74,7 +74,9 @@ def setup_langfuse_tracer():
             ok = lf.auth_check()
             logger.info(f"Langfuse auth_check(): {ok}")
             if not ok:
-                logger.warning("Langfuse no autenticó. Revisa claves/base_url/proyecto.")
+                logger.warning(
+                    "Langfuse no autenticó. Revisa claves/base_url/proyecto."
+                )
         except Exception as e:
             logger.warning(f"Langfuse auth_check() lanzó excepción: {e}")
 
@@ -102,13 +104,15 @@ def get_langfuse_callback_handler(langfuse_client, trace_name: Optional[str] = N
     # Try the v3 integration first
     try:
         from langfuse.langchain import CallbackHandler  # type: ignore
+
         return CallbackHandler()
     except Exception:
         # Fallback to v2 path if present
         try:
             from langfuse.callback.langchain import (  # type: ignore
-                LangchainCallbackHandler as CallbackHandler
+                LangchainCallbackHandler as CallbackHandler,
             )
+
             return CallbackHandler()
         except Exception as e:
             logger.warning(f"No se pudo crear Langfuse CallbackHandler: {e}")

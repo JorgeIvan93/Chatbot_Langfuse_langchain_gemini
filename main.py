@@ -4,12 +4,40 @@ and runs the interactive chat loop powered by the Gemini model.
 """
 
 import warnings  # controls Python warnings (optionally silenced via settings)
-import logging   # configures log levels and handlers for the running process
+import logging  # configures log levels and handlers for the running process
 from uuid import uuid4  # creates a simple session identifier per run
-from typing import Optional  # type hints for clarity (beginners-friendly)
 
 # Centralized configuration (loaded from .env by pydantic-settings)
 from config import settings
+
+# App logger (console + rotating file), created in services/standard_logger.py
+from services.standard_logger import logger
+
+# LangGraph builder and state definition for the conversation flow
+from flow.graph_builder import build_chat_graph
+from flow.state import ChatbotState
+
+# Langfuse integration helpers (safe setup + optional callback handler)
+from utils.langfuse_traces import setup_langfuse_tracer, get_langfuse_callback_handler
+
+# Try to import Langfuse SDK helpers; if unavailable, define safe no-ops.
+try:
+    # observe/get_client are convenient helpers to create root/child spans
+    from langfuse import observe, get_client
+except Exception:
+
+    def observe(*args, **kwargs):
+        """Fallback no-op decorator when Langfuse is not available."""
+
+        def wrap(fn):
+            return fn
+
+        return wrap
+
+    def get_client():
+        """Fallback no-op client getter when Langfuse is not available."""
+        return None
+
 
 # --- Warnings and third‑party log noise control (driven by settings) ---
 # Keep the logic minimal: only toggle if explicitly requested via .env.
@@ -30,11 +58,10 @@ if settings.QUIET_THIRD_PARTY:
     ):
         logging.getLogger(_noisy).setLevel(logging.ERROR)
 
-# App logger (console + rotating file), created in services/standard_logger.py
-from services.standard_logger import logger
 
-
-def _lower_console_handler_level(log: logging.Logger, level_name: str = "WARNING") -> None:
+def _lower_console_handler_level(
+    log: logging.Logger, level_name: str = "WARNING"
+) -> None:
     """
     Lower ONLY the console handler level so the terminal stays clean while
     the file handler continues to capture INFO and DEBUG for troubleshooting.
@@ -43,7 +70,6 @@ def _lower_console_handler_level(log: logging.Logger, level_name: str = "WARNING
         level = getattr(logging, level_name.upper(), logging.WARNING)
     except Exception:
         level = logging.WARNING
-
     for h in log.handlers:
         if isinstance(h, logging.StreamHandler):
             h.setLevel(level)
@@ -52,32 +78,11 @@ def _lower_console_handler_level(log: logging.Logger, level_name: str = "WARNING
 # Apply the console downscaling (e.g., show WARNING+ in terminal; keep INFO in file)
 _lower_console_handler_level(logger, settings.LOG_CONSOLE_LEVEL)
 
-# LangGraph builder and state definition for the conversation flow
-from flow.graph_builder import build_chat_graph
-from flow.state import ChatbotState
-
-# Langfuse integration helpers (safe setup + optional callback handler)
-from utils.langfuse_traces import setup_langfuse_tracer, get_langfuse_callback_handler
-
-
-# Try to import Langfuse SDK helpers; if unavailable, define safe no-ops.
-try:
-    # observe/get_client are convenient helpers to create root/child spans
-    from langfuse import observe, get_client
-except Exception:
-    def observe(*args, **kwargs):
-        """Fallback no-op decorator when Langfuse is not available."""
-        def wrap(fn):
-            return fn
-        return wrap
-
-    def get_client():
-        """Fallback no-op client getter when Langfuse is not available."""
-        return None
-
 
 @observe(name="chat.turn")
-def _observed_turn_invoke(chat_graph, state: ChatbotState, callbacks=None) -> ChatbotState:
+def _observed_turn_invoke(
+    chat_graph, state: ChatbotState, callbacks=None
+) -> ChatbotState:
     """
     Execute a single chat turn under an observed span (if Langfuse is active).
     Also updates the trace with the user input and the model output.
@@ -87,13 +92,17 @@ def _observed_turn_invoke(chat_graph, state: ChatbotState, callbacks=None) -> Ch
     # Attach user input to the current trace (safe-guarded)
     try:
         if lf:
-            lf.update_current_trace(input={"user_input": state.get("current_input", "")})
+            lf.update_current_trace(
+                input={"user_input": state.get("current_input", "")}
+            )
     except Exception:
         # Never break the chat on observability issues
         pass
 
     # Invoke the graph with an optional Langfuse callback handler
-    result = chat_graph.invoke(state, config={"callbacks": [callbacks]} if callbacks else {})
+    result = chat_graph.invoke(
+        state, config={"callbacks": [callbacks]} if callbacks else {}
+    )
 
     # Attach model output to the current trace (safe-guarded)
     try:
@@ -132,13 +141,20 @@ def run_chat_loop(chat_graph, langfuse_client):
     print(f"      {settings.APP_NAME.upper()} - VERSION {settings.APP_VERSION}")
     print("=" * 30)
     print(f"Powered by: Gemini Model ({settings.gemini_model}) and LangGraph.")
-    print("Observability:", "LangFuse Tracing ENABLED." if langfuse_client else "Standard Logging (LangFuse DISABLED).")
+    print(
+        "Observability:",
+        "LangFuse Tracing ENABLED."
+        if langfuse_client
+        else "Standard Logging (LangFuse DISABLED).",
+    )
     print("-" * 30)
     print("Welcome! Type 'exit' or 'quit' to end the session.")
     print("-" * 30)
 
     # Single Langfuse handler reused across invocations (recommended pattern)
-    callback_handler = get_langfuse_callback_handler(langfuse_client, trace_name="chatbot_session_run")
+    callback_handler = get_langfuse_callback_handler(
+        langfuse_client, trace_name="chatbot_session_run"
+    )
 
     # If Langfuse client is active, open a root span for the whole session
     lf_client = get_client() if langfuse_client else None
@@ -150,13 +166,14 @@ def run_chat_loop(chat_graph, langfuse_client):
             try:
                 # Enrich the root trace with useful identifiers
                 span.update_trace(
-                    user_id="jorge.montes",       # adjust if you support multiple users
+                    user_id="jorge.montes",  # adjust if you support multiple users
                     session_id=session_id,
                     tags=["local", "dev"],
                     metadata={"app_version": settings.APP_VERSION},
                 )
             except Exception:
                 pass
+
             _chat_loop_body(chat_graph, callback_handler)
 
     else:
@@ -192,13 +209,15 @@ def _chat_loop_body(chat_graph, callback_handler):
         initial_state: ChatbotState = {
             "messages": [],
             "current_input": user_input,
-            "llm_response": ""
+            "llm_response": "",
         }
 
         try:
             # If the callback handler exists, use the observed function
             if callback_handler:
-                result = _observed_turn_invoke(chat_graph, initial_state, callbacks=callback_handler)
+                result = _observed_turn_invoke(
+                    chat_graph, initial_state, callbacks=callback_handler
+                )
             else:
                 result = chat_graph.invoke(initial_state)
 

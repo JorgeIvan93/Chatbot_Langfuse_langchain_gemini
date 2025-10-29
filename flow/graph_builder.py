@@ -1,6 +1,5 @@
 """Build and compile the LangGraph state graph that orchestrates the chatbot flow."""
 
-from typing import Optional  # Type hinting for optional logger parameter
 from langgraph.graph import StateGraph, END  # State machine builder and terminal marker
 from flow.state import ChatbotState  # Typed state used by the graph
 from flow.processing_nodes import process_user_input, llm_response_node  # Graph nodes

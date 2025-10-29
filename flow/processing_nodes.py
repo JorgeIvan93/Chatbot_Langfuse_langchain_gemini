@@ -1,7 +1,11 @@
 """Define the node functions used by the LangGraph chatbot."""
 
 from typing import List  # message list typing
-from langchain_core.messages import HumanMessage, AIMessage, BaseMessage  # LangChain message types
+from langchain_core.messages import (
+    HumanMessage,
+    AIMessage,
+    BaseMessage,
+)  # LangChain message types
 from flow.state import ChatbotState  # shared typed state for the graph
 from services.gemini_client import gemini_client  # preconfigured Gemini LLM client
 from services.standard_logger import logger  # app logger

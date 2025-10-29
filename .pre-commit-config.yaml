@@ -1,0 +1,39 @@
+# Purpose:
+#   Pre-commit configuration to enforce code quality and security checks
+#   before changes are committed to the repository.
+
+repos:
+  # --- Basic hygiene hooks ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files    # Prevent committing very large files
+      - id: end-of-file-fixer          # Ensure newline at EOF
+      - id: trailing-whitespace        # Remove trailing spaces
+
+  # --- Code formatter (Black) ---
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3.13   # Match your Python version
+
+  # --- Linter (Ruff) ---
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.14
+    hooks:
+      - id: ruff
+        args: [--fix]                  # Auto-fix lint issues where possible
+
+  # --- Type checker (Mypy) ---
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [pydantic]  # Include Pydantic for type hints
+
+  # --- Secret detection (optional but recommended) ---
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets

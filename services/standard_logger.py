@@ -5,7 +5,9 @@ Keeps warnings under control and prevents third‑party libraries from flooding 
 
 import logging  # Python standard logging framework
 import warnings  # Built‑in warnings control, routed into logging if desired
-from logging.handlers import RotatingFileHandler  # File handler with size‑based rotation
+from logging.handlers import (
+    RotatingFileHandler,
+)  # File handler with size‑based rotation
 from pathlib import Path  # Cross‑platform filesystem paths
 
 LOGGER_NAME = "AdvancedChatbotLogger"
@@ -54,8 +56,8 @@ def setup_logger(
     if not app_logger.handlers:
         # Shared formatter for both console and file handlers
         fmt = logging.Formatter(
-            fmt='[%(asctime)s] [%(levelname)s] [%(name)s]: %(message)s',
-            datefmt='%Y-%m-%d %H:%M:%S',
+            fmt="[%(asctime)s] [%(levelname)s] [%(name)s]: %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
         )
 
         # --- Console handler: visible in terminal runs ---
@@ -69,8 +71,8 @@ def setup_logger(
         log_dir.mkdir(parents=True, exist_ok=True)  # ensure logs/ exists
         fh = RotatingFileHandler(
             log_dir / "app.log",
-            maxBytes=5_000_000,   # ~5 MB per file
-            backupCount=3,        # keep up to 3 old files
+            maxBytes=5_000_000,  # ~5 MB per file
+            backupCount=3,  # keep up to 3 old files
             encoding="utf-8",
         )
         fh.setFormatter(fmt)
