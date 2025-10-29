@@ -1,6 +1,18 @@
+# Core LangChain framework
 langchain
+
+# Gemini integration for LangChain (Google Generative AI)
 langchain-google-genai
-google-generativeai
+
+# LangGraph for conversation flow orchestration
 langgraph
+
+# Langfuse SDK for observability and tracing
 langfuse
-python-dotenv
+
+# Pydantic v2 for data validation and settings management
+pydantic
+pydantic-settings
+
+# YAML support (optional, useful for prompt templates or configs)
+PyYAML

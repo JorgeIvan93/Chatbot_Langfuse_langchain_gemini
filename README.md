@@ -1,79 +1,109 @@
 # Chatbot LangGraph con Gemini
 
-Aplicación de chatbot basada en LangGraph que utiliza el modelo Gemini de Google AI para procesar y responder preguntas.
+Aplicación de consola basada en **LangGraph** que usa **Google Gemini** (vía LangChain) para responder al usuario, con **observabilidad opcional en Langfuse**. El proyecto prioriza una configuración centralizada (Pydantic Settings), buen logging y trazas reproducibles.
 
-## Características
+---
 
-- Utiliza LangGraph para gestionar el flujo de la conversación
-- Integración con Gemini (Google AI) como LLM
-- Manejo de estado y flujo mediante grafos
-- Logging con LangFuse para monitoreo
+## ✨ Características
 
-## Requisitos
+- **Conversación** orquestada con **LangGraph** (nodos y estado tipado).
+- **Modelo LLM**: Gemini vía `langchain-google-genai`.
+- **Config centralizada** con `pydantic-settings` (sin acceder a `os.environ` en el código).
+- **Logging** a consola y archivo con rotación.
+- **Tracing opcional** con **Langfuse** (handler para LangChain + spans por sesión/turno).
+- **Comentarios pedagógicos** en el código para facilitar el mantenimiento.
 
-- Python 3.8+
-- Cuenta de Google AI con acceso a Gemini
-- API Key de Google AI (Gemini)
-- API Key de LangFuse (opcional, para logging)
+---
 
-## Instalación
+## 🧱 Requisitos
 
-1. Clonar el repositorio:
-```bash
-git clone https://github.com/JorgeIvan93/Chatbot_Langfuse_langchain_gemini.git
-cd Chatbot_Langfuse_langchain_gemini
-```
+- **Python 3.13** (recomendado para usar Langfuse hoy).
+  - *Nota:* Con Python 3.14, el SDK de Langfuse puede fallar al importar debido a rutas internas que dependen de Pydantic v1. En 3.14 el tracing está deshabilitado por defecto en el código.  
+- Clave de **Google AI Studio** (Gemini Developer API) — *no* Vertex AI.
+- (Opcional) Proyecto y llaves de **Langfuse Cloud** (EU/US).
 
-2. Crear y activar entorno virtual:
-```bash
-python -m venv venv
-.\venv\Scripts\activate  # Windows
-source venv/bin/activate  # Linux/Mac
-```
+---
 
-3. Instalar dependencias:
-```bash
-pip install -r requirements.txt
-```
+## 🧰 Stack principal
 
-4. Configurar variables de entorno:
-   - Copiar `.env.example` a `.env`
-   - Añadir las API keys necesarias
+- **LangChain v1** + **`langchain-google-genai`** (Gemini).
+- **LangGraph** para orquestación.
+- **Pydantic v2** + `pydantic-settings` para `.env`.
+- **Langfuse SDK v3** (tracing opcional).
+- Logging estándar de Python con `RotatingFileHandler`.
 
-## Uso
+---
 
-1. Activar el entorno virtual:
-```bash
-.\venv\Scripts\activate  # Windows
-source venv/bin/activate  # Linux/Mac
-```
+## 📁 Estructura del proyecto
+.
+├─ config/
+│  ├─ init.py
+│  └─ config.py            # Loads settings from .env using Pydantic
+├─ flow/
+│  ├─ init.py
+│  ├─ graph_builder.py     # Builds and compiles the LangGraph
+│  ├─ processing_nodes.py  # Nodes for user input and LLM response
+│  └─ state.py             # Defines the chatbot state (TypedDict)
+├─ services/
+│  ├─ init.py
+│  ├─ standard_logger.py   # Logger setup (console + file rotation)
+│  └─ gemini_client.py     # Wrapper for Gemini model via LangChain
+├─ utils/
+│  ├─ init.py
+│  └─ langfuse_traces.py   # Safe Langfuse setup + LangChain callback handler
+├─ logs/                   # Log files (rotated)
+├─ .env                    # Sensitive keys (ignored by Git)
+├─ .env.example            # Template for environment variables
+├─ main.py                 # Application entrypoint (loop + tracing)
+└─ requirements.txt        # Dependencies
 
-2. Ejecutar la aplicación:
-```bash
-python main.py
-```
+## ⚙️ Configuration
+Create a `.env` file based on `.env.example`:
 
-## Estructura del Proyecto
+```dotenv
+# Gemini API
+GOOGLE_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-2.5-pro
+LLM_TEMPERATURE=0.7
 
-- `main.py`: Punto de entrada de la aplicación
-- `flow/`: Módulos del grafo de conversación
-  - `graph.py`: Definición del grafo de estado
-  - `nodes.py`: Nodos del grafo (input, procesamiento, respuesta)
-- `services/`: Servicios externos
-  - `gemini.py`: Wrapper para la API de Gemini
-- `utils/`: Utilidades
-  - `langfuse_logger.py`: Logger para LangFuse
-- `config.py`: Configuración del proyecto
-- `requirements.txt`: Dependencias del proyecto
+# Logging
+LOG_CONSOLE_LEVEL=WARNING
+SILENCE_WARNINGS=true
+QUIET_THIRD_PARTY=true
 
-## Contribuir
+# App Info
+APP_NAME=Advanced LangGraph Chatbot
+APP_VERSION=1.0.1
 
-1. Fork del repositorio
-2. Crear rama para la feature (`git checkout -b feature/nombre`)
-3. Commit de cambios (`git commit -am 'Añadir feature'`)
-4. Push a la rama (`git push origin feature/nombre`)
-5. Crear Pull Request
+# Langfuse (optional)
+LANGFUSE_PUBLIC_KEY=pk-lf-xxxxxxxx
+LANGFUSE_SECRET_KEY=sk-lf-xxxxxxxx
+LANGFUSE_BASE_URL=https://cloud.langfuse.com
+ENABLE_LANGFUSE=true
+LANGFUSE_TRACING_ENVIRONMENT=development
+LANGFUSE_DEBUG=True
+LANGFUSE_SAMPLE_RATE=1.0
 
-## Licencia
 
+🚀 How It Works
+
+Startup: loads settings, configures logger, builds LangGraph, and initializes Langfuse (if enabled).
+Chat Loop: reads user input, processes through graph nodes, and returns Gemini’s response.
+Observability: when Langfuse is active, creates a root span for the session and spans for each turn.
+
+
+🛡️ Security Notes
+
+.env is ignored by Git; never commit API keys.
+Rotate keys if shared accidentally.
+Avoid logging sensitive data (the logger is configured to keep logs safe).
+
+
+📌 Recommendations
+
+Use Python 3.13 for full Langfuse compatibility (3.14 disables tracing by default).
+Keep dependencies updated and remove google-generativeai if using langchain-google-genai >= 3.0.0.
+
+
+License
 MIT
