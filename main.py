@@ -137,9 +137,9 @@ def run_chat_loop(chat_graph, langfuse_client):
     session in a root span so every turn nests under it.
     """
     # Simple banner so users know the app context at a glance
-    print("=" * 30)
+    print("=" * 60)
     print(f"      {settings.APP_NAME.upper()} - VERSION {settings.APP_VERSION}")
-    print("=" * 30)
+    print("=" * 60)
     print(f"Powered by: Gemini Model ({settings.gemini_model}) and LangGraph.")
     print(
         "Observability:",
@@ -147,9 +147,9 @@ def run_chat_loop(chat_graph, langfuse_client):
         if langfuse_client
         else "Standard Logging (LangFuse DISABLED).",
     )
-    print("-" * 30)
-    print("Welcome! Type 'exit' or 'quit' to end the session.")
-    print("-" * 30)
+    print("_" * 60)
+    print("Welcome! Type 'exit', 'quit', 'close', bye to end the session.")
+    print("_" * 60)
 
     # Single Langfuse handler reused across invocations (recommended pattern)
     callback_handler = get_langfuse_callback_handler(
@@ -196,12 +196,13 @@ def _chat_loop_body(chat_graph, callback_handler):
     while True:
         try:
             user_input = input("You: ")
+            print("")
         except (EOFError, KeyboardInterrupt):
             logger.info("Chat terminated by user.")
             break
 
         # Friendly exit commands
-        if user_input.strip().lower() in {"exit", "quit"}:
+        if user_input.strip().lower() in {"exit", "quit", "close", "bye"}:
             logger.info("Exiting chatbot.")
             break
 

@@ -4,15 +4,9 @@ Centralizes model configuration and exposes a single, reusable client instance.
 """
 
 from __future__ import annotations
-
-# LangChain's integration for Google Gemini chat models
-from langchain_google_genai import ChatGoogleGenerativeAI
-
-# Application logger (console + rotating file via services/standard_logger.py)
-from services.standard_logger import logger
-
-# Centralized settings loaded from .env through pydantic-settings (config/config.py)
-from config import settings
+from langchain_google_genai import ChatGoogleGenerativeAI# LangChain's integration for Google Gemini chat models
+from services.standard_logger import logger # Application logger (console + rotating file via services/standard_logger.py)
+from config import settings # Centralized settings loaded from .env through pydantic-settings (config/config.py)
 
 
 class GeminiClient:

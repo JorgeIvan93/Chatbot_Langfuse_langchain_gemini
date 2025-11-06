@@ -3,16 +3,11 @@ Initializes and wires Langfuse tracing for the application.
 Provides a safe setup (esp. on Python 3.14) and a LangChain callback handler if available.
 """
 
-from __future__ import annotations
-
+from __future__ import annotations 
 import sys  # Python version check to guard 3.14 behavior
 from typing import Optional
-
-# Application logger (console + rotating file)
-from services.standard_logger import logger
-
-# Centralized configuration (keys, host/base_url, flags) via pydantic-settings
-from config import settings
+from services.standard_logger import logger# Application logger (console + rotating file)
+from config import settings # Centralized configuration (keys, host/base_url, flags) via pydantic-settings
 
 
 def _get_base_url() -> str:
