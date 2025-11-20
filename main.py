@@ -180,7 +180,7 @@ def run_chat_loop(chat_graph, langfuse_client):
         # No tracing: run the same loop with plain logging
         _chat_loop_body(chat_graph, callback_handler)
 
-    # Ensure any buffered spans are sent before process exit
+    # Ensure any buffered spans are sent before  exit
     if langfuse_client:
         try:
             langfuse_client.flush()

@@ -1,0 +1,1928 @@
+[2025-10-28 20:01:58] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-10-28 20:29:44] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-10-28 20:29:44] [WARNING] [AdvancedChatbotLogger]: Langfuse deshabilitado en Python 3.14 por incompatibilidad del SDK (usa Pydantic v1 en rutas internas). Continuamos con logging estándar.
+[2025-10-28 20:36:45] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-10-28 20:36:45] [WARNING] [AdvancedChatbotLogger]: Langfuse deshabilitado en Python 3.14 por incompatibilidad del SDK (usa Pydantic v1 en rutas internas). Continuamos con logging estándar.
+[2025-10-28 20:36:45] [INFO] [AdvancedChatbotLogger]: Application starting.
+[2025-10-28 20:36:45] [INFO] [AdvancedChatbotLogger]: Starting Chatbot initialization...
+[2025-10-28 20:36:45] [INFO] [AdvancedChatbotLogger]: Using LLM Model: gemini-2.5-pro
+[2025-10-28 20:36:45] [WARNING] [AdvancedChatbotLogger]: Langfuse deshabilitado en Python 3.14 por incompatibilidad del SDK (usa Pydantic v1 en rutas internas). Continuamos con logging estándar.
+[2025-10-28 20:36:45] [INFO] [AdvancedChatbotLogger]: Building the LangGraph structure.
+[2025-10-28 20:36:45] [INFO] [AdvancedChatbotLogger]: LangGraph successfully compiled.
+[2025-10-28 20:36:45] [INFO] [AdvancedChatbotLogger]: Initialization complete. Entering interactive loop.
+[2025-10-28 20:36:54] [INFO] [AdvancedChatbotLogger]: Node: Processing user input: quien eres?...
+[2025-10-28 20:36:54] [INFO] [AdvancedChatbotLogger]: Node: Generating LLM response using 1 message(s).
+[2025-10-28 20:36:55] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 38, in llm_response_node
+    ai_msg: AIMessage = llm.invoke(messages)  # type: ignore
+                        ~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Python\pythoncore-3.14-64\Lib\concurrent\futures\_base.py", line 443, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Python\pythoncore-3.14-64\Lib\concurrent\futures\_base.py", line 395, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-28 20:37:21] [INFO] [AdvancedChatbotLogger]: Node: Processing user input: close...
+[2025-10-28 20:37:21] [INFO] [AdvancedChatbotLogger]: Node: Generating LLM response using 1 message(s).
+[2025-10-28 20:37:21] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 38, in llm_response_node
+    ai_msg: AIMessage = llm.invoke(messages)  # type: ignore
+                        ~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Python\pythoncore-3.14-64\Lib\concurrent\futures\_base.py", line 443, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Python\pythoncore-3.14-64\Lib\concurrent\futures\_base.py", line 395, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-28 20:37:25] [INFO] [AdvancedChatbotLogger]: Exiting chatbot.
+[2025-10-28 21:57:55] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-10-28 21:57:55] [WARNING] [AdvancedChatbotLogger]: Langfuse deshabilitado en Python 3.14 por incompatibilidad del SDK (usa Pydantic v1 en rutas internas). Continuamos con logging estándar.
+[2025-10-28 21:57:56] [INFO] [AdvancedChatbotLogger]: Application starting.
+[2025-10-28 21:57:56] [INFO] [AdvancedChatbotLogger]: Starting Chatbot initialization...
+[2025-10-28 21:57:56] [INFO] [AdvancedChatbotLogger]: Using LLM Model: gemini-2.5-pro
+[2025-10-28 21:57:56] [WARNING] [AdvancedChatbotLogger]: Langfuse deshabilitado en Python 3.14 por incompatibilidad del SDK (usa Pydantic v1 en rutas internas). Continuamos con logging estándar.
+[2025-10-28 21:57:56] [INFO] [AdvancedChatbotLogger]: Building the LangGraph structure.
+[2025-10-28 21:57:57] [INFO] [AdvancedChatbotLogger]: LangGraph successfully compiled.
+[2025-10-28 21:57:57] [INFO] [AdvancedChatbotLogger]: Initialization complete. Entering interactive loop.
+[2025-10-28 21:58:09] [INFO] [AdvancedChatbotLogger]: Node: Processing user input: quien eres tu?...
+[2025-10-28 21:58:09] [INFO] [AdvancedChatbotLogger]: Node: Generating LLM response using 1 message(s).
+[2025-10-28 21:58:22] [INFO] [AdvancedChatbotLogger]: LLM response received successfully.
+[2025-10-28 21:58:27] [INFO] [AdvancedChatbotLogger]: Exiting chatbot.
+[2025-10-28 22:14:27] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-10-28 22:22:42] [WARNING] [AdvancedChatbotLogger]: Langfuse no importable (unable to infer type for attribute "description"). Tracing deshabilitado.
+[2025-10-28 23:13:33] [WARNING] [AdvancedChatbotLogger]: Langfuse no importable (unable to infer type for attribute "description"). Tracing deshabilitado.
+[2025-10-29 07:18:43] [WARNING] [AdvancedChatbotLogger]: Langfuse no importable (unable to infer type for attribute "description"). Tracing deshabilitado.
+[2025-10-29 07:19:30] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 19, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Python\pythoncore-3.14-64\Lib\concurrent\futures\_base.py", line 443, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Python\pythoncore-3.14-64\Lib\concurrent\futures\_base.py", line 395, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-29 07:28:36] [WARNING] [AdvancedChatbotLogger]: Langfuse no importable (unable to infer type for attribute "description"). Tracing deshabilitado.
+[2025-10-29 10:25:11] [WARNING] [AdvancedChatbotLogger]: Langfuse auth_check() lanzó excepción: status_code: 401, body: {'message': "Invalid credentials. Confirm that you've configured the correct host."}
+[2025-10-29 10:25:11] [INFO] [AdvancedChatbotLogger]: Langfuse inicializado correctamente.
+[2025-10-29 10:40:42] [INFO] [AdvancedChatbotLogger]: Langfuse auth_check(): True
+[2025-10-29 10:40:42] [INFO] [AdvancedChatbotLogger]: Langfuse inicializado correctamente.
+[2025-10-29 10:51:20] [INFO] [AdvancedChatbotLogger]: Langfuse auth_check(): True
+[2025-10-29 10:51:20] [INFO] [AdvancedChatbotLogger]: Langfuse inicializado correctamente.
+[2025-10-29 11:47:35] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 19, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-29 11:47:57] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 19, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:05:46] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-10-30 09:06:08] [WARNING] [AdvancedChatbotLogger]: Node: current_input vacío o no provisto.
+[2025-10-30 09:06:09] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:06:09] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:06:10] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:06:10] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:06:10] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:06:11] [WARNING] [AdvancedChatbotLogger]: Node: current_input vacío o no provisto.
+[2025-10-30 09:06:11] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:06:11] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:06:12] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:06:25] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 09:06:34] [ERROR] [AdvancedChatbotLogger]: Error invoking LLM: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 217, in _chat_with_retry
+    return generation_method(**kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 869, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\flow\processing_nodes.py", line 34, in llm_response_node
+    ai_msg: AIMessage = gemini_client.get_llm_instance().invoke(messages)  # type: ignore
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 1999, in invoke
+    return super().invoke(input, config, stop=stop, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 379, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1088, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 903, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1192, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 2113, in _generate
+    response: GenerateContentResponse = _chat_with_retry(
+                                        ~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        metadata=self.default_metadata,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 247, in _chat_with_retry
+    return _chat_with_retry(**params)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jorge.montes\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\jorge.montes\Downloads\langgraph_gemini_app\.venv313\Lib\site-packages\langchain_google_genai\chat_models.py", line 229, in _chat_with_retry
+    raise ChatGoogleGenerativeAIError(msg) from e
+langchain_google_genai.chat_models.ChatGoogleGenerativeAIError: Invalid argument provided to Gemini: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+[2025-10-30 13:20:21] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-10-31 07:29:09] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-10-31 09:21:10] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-10-31 09:37:09] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-11-05 16:24:18] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-11-05 16:42:31] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-11-05 16:43:16] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-11-05 16:44:48] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
+[2025-11-06 12:33:18] [INFO] [AdvancedChatbotLogger]: Initializing Gemini client with model: gemini-2.5-pro, temperature=0.7
