@@ -8,6 +8,7 @@ from app.models.prompt_config import PromptConfig
 # Absolute path based on current file location
 DEFAULT_PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "assistant.yaml"
 
+
 def load_prompt(path: str = str(DEFAULT_PROMPT_PATH)) -> PromptConfig:
     """
     Load and validate the prompt YAML file.

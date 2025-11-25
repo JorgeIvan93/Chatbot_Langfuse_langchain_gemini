@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 
+
 class Settings(BaseSettings):
     # Application basic info
     app_name: str = "Chatbot Langfuse Langchain Gemini"
@@ -37,6 +38,7 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"  # Load environment variables from .env file
+
 
 # Initialize settings instance
 settings = Settings()

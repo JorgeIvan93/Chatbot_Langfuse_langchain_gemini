@@ -9,7 +9,7 @@ from fastapi.openapi.utils import get_openapi
 app = FastAPI(
     title="LangGraph Gemini Chatbot API",
     description="API for chatbot powered by LangGraph and Gemini LLM.",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 # Middleware for CORS
@@ -21,13 +21,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # State verification endpoint
 @app.get("/")
 def root():
     return {"message": "Chatbot API is running. Use chatbot endpoint."}
 
+
 # Centralized router
 app.include_router(api_router)
+
 
 # Global error handler
 @app.exception_handler(Exception)
@@ -35,8 +38,9 @@ async def global_exception_handler(request: Request, exc: Exception):
     logger.error(f"Unhandled error: {exc}")
     return JSONResponse(
         status_code=500,
-        content={"detail": "Internal Server Error. Please try again later."}
+        content={"detail": "Internal Server Error. Please try again later."},
     )
+
 
 def custom_openapi():
     """
@@ -67,6 +71,7 @@ def custom_openapi():
 
     app.openapi_schema = openapi_schema
     return app.openapi_schema
+
 
 # Apply custom OpenAPI function
 app.openapi = custom_openapi

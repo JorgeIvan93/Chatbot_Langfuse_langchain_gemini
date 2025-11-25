@@ -1,6 +1,7 @@
 from app.services.graph_builder import build_graph
 from app.services.standard_logger import logger
 
+
 async def process_chat(request):
     try:
         # Log the incoming user message
@@ -21,10 +22,7 @@ async def process_chat(request):
         response = result.get("llm_response", "No response generated")
 
         # Return both user input and chatbot response
-        return {
-            "user_message": request.message,
-            "reply": response
-        }
+        return {"user_message": request.message, "reply": response}
 
     except Exception as e:
         # Log any unexpected error and return a safe response

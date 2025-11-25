@@ -7,6 +7,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from app.services.standard_logger import logger
 from app.core.config import settings
 
+
 class GeminiClient:
     def __init__(self) -> None:
         model = settings.gemini_model
@@ -18,8 +19,12 @@ class GeminiClient:
             logger.error(msg)
             raise ValueError(msg)
 
-        logger.info(f"Initializing Gemini client with model: {model}, temperature={temperature}")
-        self.llm = ChatGoogleGenerativeAI(model=model, temperature=temperature, api_key=api_key)
+        logger.info(
+            f"Initializing Gemini client with model: {model}, temperature={temperature}"
+        )
+        self.llm = ChatGoogleGenerativeAI(
+            model=model, temperature=temperature, api_key=api_key
+        )
 
     def invoke_model(self, prompt: str) -> str:
         try:
@@ -28,5 +33,6 @@ class GeminiClient:
         except Exception as e:
             logger.exception(f"Error during Gemini invocation: {e}")
             return "Sorry, I encountered an error while processing your request."
+
 
 gemini_client = GeminiClient()

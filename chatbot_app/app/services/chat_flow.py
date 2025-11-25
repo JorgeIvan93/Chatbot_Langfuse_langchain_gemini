@@ -1,6 +1,7 @@
 from app.services.graph_builder import build_graph
 from app.services.state import ChatbotState
 
+
 async def run_chat_flow(message: str) -> str:
     """
     Executes the LangGraph flow with the given user message and returns the LLM response.

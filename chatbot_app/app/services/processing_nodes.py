@@ -28,7 +28,9 @@ def process_user_input(state: ChatbotState) -> ChatbotState:
         prompt_cfg = load_prompt()
         system_text = prompt_cfg.persona
     except Exception as e:
-        logger.warning(f"Prompt YAML not available or invalid; using fallback. Detail: {e}")
+        logger.warning(
+            f"Prompt YAML not available or invalid; using fallback. Detail: {e}"
+        )
         system_text = (
             "You are a well-read literary advisor. Detect the user's language (Spanish or English) "
             "and respond in the same language. Provide book recommendations, short summaries, "

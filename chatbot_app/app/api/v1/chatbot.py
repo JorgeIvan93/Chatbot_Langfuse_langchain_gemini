@@ -6,7 +6,8 @@ from app.services.gemini_client import gemini_client
 from app.utils.langfuse_traces import langfuse_client
 
 router = APIRouter(tags=["Chatbot"])
-security = HTTPBearer()  
+security = HTTPBearer()
+
 
 def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)) -> str:
     """
@@ -14,7 +15,9 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)) 
     """
     token = credentials.credentials
     try:
-        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
+        payload = jwt.decode(
+            token, settings.secret_key, algorithms=[settings.algorithm]
+        )
         username: str = payload.get("sub")
         if username is None:
             raise HTTPException(status_code=401, detail="Invalid token")
@@ -22,10 +25,11 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)) 
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
+
 @router.post("/", summary="Chat endpoint (requires Bearer token)")
 async def chatbot(
     message: str = Query(..., description="User message for the chatbot"),
-    username: str = Depends(verify_token)
+    username: str = Depends(verify_token),
 ):
     """
     Chatbot endpoint:
@@ -37,7 +41,9 @@ async def chatbot(
         response_text = None
 
         if langfuse_client:
-            with langfuse_client.start_as_current_observation(as_type="span", name="chatbot_request") as span:
+            with langfuse_client.start_as_current_observation(
+                as_type="span", name="chatbot_request"
+            ) as span:
                 span.update(input=message, metadata={"user_id": username})
 
                 with langfuse_client.start_as_current_observation(
@@ -50,11 +56,15 @@ async def chatbot(
                     gen.update(input=message, output=response_text)
 
                 span.update(output=response_text)
-                langfuse_client.update_current_trace(metadata={"endpoint": "/api/v1/chatbot"})
+                langfuse_client.update_current_trace(
+                    metadata={"endpoint": "/api/v1/chatbot"}
+                )
         else:
             response_text = gemini_client.invoke_model(message)
 
         return {"user": username, "message": message, "response": response_text}
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error generating response: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error generating response: {str(e)}"
+        )
