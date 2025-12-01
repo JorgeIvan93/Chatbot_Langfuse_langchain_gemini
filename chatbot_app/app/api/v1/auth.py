@@ -1,45 +1,43 @@
 from datetime import datetime, timedelta
-from typing import Optional
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from jose import jwt
+from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from app.core.config import settings
+from app.db.session import get_db
+from app.db.models.user import User
+from app.services.security import verify_password
 
-router = APIRouter()
+# Router for authentication endpoints
+router = APIRouter(prefix="/api/v1/auth", tags=["Authentication"])
 
 
-# Request model for login
 class LoginRequest(BaseModel):
+    """
+    Login payload with username and password.
+    """
+
     username: str
     password: str
 
 
-# Function to create JWT token
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
-    to_encode = data.copy()
-    expire = datetime.utcnow() + (
-        expires_delta or timedelta(minutes=settings.access_token_expire_minutes)
-    )
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(
-        to_encode, settings.secret_key, algorithm=settings.algorithm
-    )
-    return encoded_jwt
+def create_access_token(subject: str) -> str:
+    """
+    Create JWT token with expiration using SECRET_KEY and ALGORITHM from settings.
+    """
+    expire = datetime.utcnow() + timedelta(minutes=settings.access_token_expire_minutes)
+    payload = {"sub": subject, "exp": expire}
+    return jwt.encode(payload, settings.secret_key, algorithm=settings.algorithm)
 
 
-@router.post("/token", summary="Generate JWT token")
-async def login(data: LoginRequest):
-    # Validate username and password from .env
-    if (
-        data.username != settings.auth_username
-        or data.password != settings.auth_password
-    ):
+@router.post("/token", summary="Login and get JWT token")
+async def login(data: LoginRequest, db: Session = Depends(get_db)):
+    """
+    Authenticate user from database and return JWT token.
+    """
+    user = db.query(User).filter(User.username == data.username).first()
+    if not user or not verify_password(data.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
-    # Create token payload
-    access_token_expires = timedelta(minutes=settings.access_token_expire_minutes)
-    access_token = create_access_token(
-        data={"sub": data.username}, expires_delta=access_token_expires
-    )
-
-    return {"access_token": access_token, "token_type": "bearer"}
+    token = create_access_token(subject=user.username)
+    return {"access_token": token, "token_type": "bearer"}

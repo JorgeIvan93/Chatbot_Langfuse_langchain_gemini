@@ -2,32 +2,28 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    # Application basic info
+    # App basic info
     app_name: str = "Chatbot Langfuse Langchain Gemini"
 
-    # JWT configuration for authentication
-    secret_key: str  # Secret key for signing JWT tokens
-    algorithm: str = "HS256"  # Algorithm used for JWT
-    access_token_expire_minutes: int = 30  # Token expiration time in minutes
+    # JWT config
+    secret_key: str
+    algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
 
-    # Simple authentication credentials (from .env)
-    auth_username: str  # Default username for login
-    auth_password: str  # Default password for login
+    # Gemini config
+    gemini_api_key: str
+    gemini_model: str
+    llm_temperature: float
 
-    # Gemini API configuration
-    gemini_api_key: str  # API key for Gemini
-    gemini_model: str  # Default Gemini model
-    llm_temperature: float  # Model temperature for creativity
+    # Logging config
+    log_console_level: str
+    silence_warnings: bool
+    quiet_third_party: bool
 
-    # Logging configuration
-    log_console_level: str  # Minimum log level for console
-    silence_warnings: bool  # Silence Python warnings globally
-    quiet_third_party: bool  # Reduce noisy third-party logs
+    # App version
+    app_version: str
 
-    # Application version info
-    app_version: str  # Version of the application
-
-    # Langfuse observability configuration
+    # Langfuse config
     enable_langfuse: bool
     langfuse_public_key: str
     langfuse_secret_key: str
@@ -36,9 +32,12 @@ class Settings(BaseSettings):
     langfuse_debug: bool
     langfuse_sample_rate: float
 
+    # SQLite database config
+    database_url: str = "sqlite:///./chatbot.db"
+    sqlite_check_same_thread: bool = False  # allow cross-thread usage in FastAPI
+
     class Config:
-        env_file = ".env"  # Load environment variables from .env file
+        env_file = ".env"
 
 
-# Initialize settings instance
 settings = Settings()

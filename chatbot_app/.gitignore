@@ -40,3 +40,5 @@ venv.bak/
 # Local development
 .DS_Store
 .idea/
+
+.chatbot_app.db
